@@ -13,7 +13,7 @@
                     <a href="#" class="py-4 text-lg text-purple-500 font-semibold">Openkart</a>
 
                     <ul class="flex items-center space-x-4">
-                        <li><a href="#">Shop</a></li>
+                        <li><a href="{% url 'shop' %}">Shop</a></li>
                         <li><a href="#">About</a></li>
                     </ul>
                 </div>
@@ -36,13 +36,6 @@
             {% block content %}
             {% endblock %}
 
-            {% comment %} <header class="px-4 py-10 lg:py-20 bg-purple-500">
-                <div class="max-w-3xl mx-auto text-center">
-                    <p class="mb-2 text-3xl lg:text-5xl text-white">Welcome to Openkart</p>
-                    <p class="mb-10 text-white">You are entering to the world of shopping</p>
-                    <a href="#" class="inline-block px-8 py-4 rounded-xl bg-white text-purple-500 hover:bg-gray-200">Start Shopping</a>
-                </div>
-            </header>        {% endcomment %}
         </main>
 
         <footer class = "bg-gray-100">
