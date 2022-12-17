@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from product.models import Product, Category
+from django.db.models import Q
 # Create your views here.
 def frontpage(request):
     products = Product.objects.all()[0:8]
@@ -7,14 +8,23 @@ def frontpage(request):
     return render(request, 'core/frontpage.html', {'products': products})
 
 def shop(request):
-    catagories = Category.objects.all()
+    categories = Category.objects.all()
     products = Product.objects.all()
     
-    active_catagory = request.GET.get('catagory', '')
+    active_category = request.GET.get('category', '')
+    
+    if active_category:
+        products = products.filter(category__slug=active_category)
+        
+    query = request.GET.get('query', '')
+    
+    if query:
+        products = products.filter(Q(name__icontains=query) | Q(description__icontains=query))
+    
     context ={
-        'catagories': catagories,
+        'categories': categories,
         'products': products,
-        'active_catagory':active_catagory,
+        'active_category':active_category,
     }
         
     return render(request, 'core/shop.html', context)

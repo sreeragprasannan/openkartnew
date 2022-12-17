@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','openkart.com']
 
+SESSION_COOKIES_AGE = 86400
+CART_SESSION_ID = 'cart'
 
 # Application definition
 
@@ -39,7 +41,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'product',
+    'cart',
+    'tailwind',
+    'theme',
+    'django_browser_reload',
+    "django_htmx",
 ]
+
+TAILWIND_APP_NAME = 'theme'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -49,6 +58,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_browser_reload.middleware.BrowserReloadMiddleware',
+    "django_htmx.middleware.HtmxMiddleware",
 ]
 
 ROOT_URLCONF = 'openkart.urls'
@@ -64,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart'
             ],
         },
     },
@@ -123,3 +135,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
+
+STATICFILES_DIRS = [BASE_DIR / "static/js"]
