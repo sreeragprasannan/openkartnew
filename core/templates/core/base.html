@@ -2,9 +2,6 @@
 <html>
     {% load tailwind_tags %}
     <head>
-        {% load static %} 
-        <script src="{% static 'js/htmx.min.js' %}" defer></script>
-        <script src="{% static 'js/debug.js' %}" defer></script>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% tailwind_css %}
@@ -57,6 +54,6 @@
                 </div>
             </div>
         </footer>
-        <!-- <script src="https://unpkg.com/htmx.org@1.7.0"> </script> -->
+        <script src="https://unpkg.com/htmx.org@1.7.0"> </script>
     </body>
 </html>
