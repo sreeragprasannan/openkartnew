@@ -5,6 +5,7 @@ from django.urls import path,include
 from core.views import frontpage,shop,signup,login
 from product.views import product
 from cart.views import add_to_cart
+from openkart import settings
 
 urlpatterns = [
     path('', frontpage, name='frontpage'),
@@ -17,4 +18,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ] 
 
-urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -23,13 +23,14 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='uploads/', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
+    
     class Meta:
         ordering = ('created_at',)
         
     def __str__(self):
         return self.name
     
-    def get_tumbnail(self):
+    def get_thumbnail(self):
         if self.thumbnail:
             return self.thumbnail.url
         else:
@@ -39,15 +40,16 @@ class Product(models.Model):
                 
                 return self.thumbnail.url
             else:
-                return 'https://via.placehold.com/240x240x.jpg'
+                return 'https://via.placeholder.com/240x240x.jpg'
             
     def make_thumbnail(self, image, size=(300, 300)):
-        img = image.open(image)
+        img = Image.open(image)
         img.convert('RGB')
-        img.tumbnail(size)
+        img.thumbnail(size)
         
         thumb_io = BytesIO()
-        img.save(tumb_io, 'JPEG' , quality=85)
+        img.save(thumb_io, 'JPEG' , quality=85)
         
         thumbnail = File(thumb_io, name = image.name)
         
+        return thumbnail
