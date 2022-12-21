@@ -5,8 +5,8 @@ from django.urls import path,include
 from django.contrib.auth import views
 from core.views import frontpage,shop,signup
 from product.views import product
-from cart.views import add_to_cart
-from openkart import settings
+from cart.views import add_to_cart,cart,checkout
+
 
 urlpatterns = [
     path('', frontpage, name='frontpage'),
@@ -15,6 +15,8 @@ urlpatterns = [
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('shop/', shop, name='shop'),
     path('shop/<slug:slug>/', product, name='product'),
+    path('cart/', cart, name='cart'),
+    path('cart/checkout/', checkout, name='checkout'),
     path('add_to_cart/<int:product_id>/', add_to_cart, name= 'add_to_cart'),
     path("__reload__/", include("django_browser_reload.urls")),
     path('admin/', admin.site.urls),
