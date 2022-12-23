@@ -28,8 +28,10 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost','127.0.0.1','openkart.com']
 
 LOGOUT_REDIRECT_URL = '/'
-
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
+
+
 
 SESSION_COOKIES_AGE = 86400
 CART_SESSION_ID = 'cart'
