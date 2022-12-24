@@ -2,7 +2,7 @@ from django.db import models
 from django.core.files import File
 from io import BytesIO
 from PIL import Image
-import os
+
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -25,10 +25,11 @@ class Product(models.Model):
     thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
     
     class Meta:
-        ordering = ('created_at',)
+        ordering = ('-created_at',)
         
     def __str__(self):
         return self.name
+    
     
     def get_thumbnail(self):
         if self.thumbnail:
@@ -42,6 +43,7 @@ class Product(models.Model):
             else:
                 return 'https://via.placeholder.com/240x240x.jpg'
             
+    #To creating image thumbnail        
     def make_thumbnail(self, image, size=(300, 300)):
         img = Image.open(image)
         img.convert('RGB')
