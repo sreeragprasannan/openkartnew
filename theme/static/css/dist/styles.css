@@ -875,6 +875,10 @@ select {
   width: 75%;
 }
 
+.w-2\/4 {
+  width: 50%;
+}
+
 .max-w-6xl {
   max-width: 72rem;
 }
@@ -1103,6 +1107,11 @@ select {
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .font-semibold {

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from product.models import Product
-
+from itertools import product
 # Create your models here.
 class Order(models.Model):
     ORDERED = 'odered'
