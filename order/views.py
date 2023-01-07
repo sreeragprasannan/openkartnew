@@ -28,14 +28,14 @@ def start_order(request):
             'quantity': item['quantity'],
         }
         
-        item.append(obj)
+        items.append(obj)
         
     session = ''
     payment_intent = ''
     
     stripe.api_key = settings.STRIPE_API_KEY_HIDDEN
     session = stripe.checkout.Session.create(
-        pyment_method_types=['card'],
+        payment_method_types=['card'],
         line_items=items,
         mode='payment',
         success_url='http://127.0.0.1:8000/cart/success/',
@@ -43,18 +43,18 @@ def start_order(request):
     )
     payment_intent = session.payment_intent
     
-    first_name = request.POST.get['first_name']
-    last_name = request.POST.get['last_name']
-    email = request.POST.get['email']
-    address = request.POST.get['address']
-    zipcode = request.POST.get['zipcode']
-    place = request.POST.get['place']
-    phone = request.POST.get['phone']
+    first_name = data['first_name']
+    last_name = data['last_name']
+    email = data['email']
+    address = data['address']
+    zipcode = data['zipcode']
+    place = data['place']
+    phone = data['phone']
 
     order = Order.objects.create(user=request.user, first_name=first_name, last_name=last_name, email=email, phone=phone, address=address, zipcode=zipcode, place=place)
     order.payment_intent = payment_intent
-    oder.paid_amount = total_price
-    oder.paid = True
+    order.paid_amount = total_price
+    order.paid = True
     order.save()
     
 
@@ -64,6 +64,7 @@ def start_order(request):
         price = product.price * quantity
 
         item = OrderItem.objects.create(order=order, product=product, price=price, quantity=quantity)
+
 
 
     return JsonResponse({'session': session, 'order': payment_intent})

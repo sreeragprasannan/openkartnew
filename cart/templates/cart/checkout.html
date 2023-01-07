@@ -82,42 +82,41 @@
 {% block scripts %}
 <script type="application/javascript" src="https://js.stripe.com/v3/"></script>
 <script>
-    function validateForm(data){
+    function validateForm(data) {
         let errors = []
 
-        if (data.first_name === ''){
+        if (data.first_name === '') {
             errors.push('First name is empty')
         }
 
-        if (data.last_name === ''){
+        if (data.last_name === '') {
             errors.push('Last name is empty')
         }
 
-        if (data.email === ''){
+        if (data.email === '') {
             errors.push('Email is empty')
         }
 
-        if (data.phone === ''){
-            errors.push('Phone number is empty')
+        if (data.phone === '') {
+            errors.push('Phone is empty')
         }
 
-        if (data.address === ''){
+        if (data.address === '') {
             errors.push('Address is empty')
         }
 
-        if (data.zipcode === ''){
-            errors.push('Zip/PIN code is empty')
+        if (data.zipcode === '') {
+            errors.push('Zipcode is empty')
         }
 
-        if (data.place === ''){
+        if (data.place === '') {
             errors.push('Place is empty')
         }
 
         return errors
-
     }
 
-    function buy(event){
+    function buy(event) {
         event.preventDefault()
 
         let data = {
@@ -132,25 +131,35 @@
 
         let errors = validateForm(data)
 
-        if(errors.length){
+        if (errors.length) {
             console.log('Errors', errors)
-        }else{
+        } else {
             var stripe = Stripe('{{ pub_key }}')
+
             fetch('/order/start_order/', {
-                method:'POST',
+                method: 'POST',
                 headers: {
-                    'Content-Type':'application/json',
+                    'Content-Type': 'application/json',
                     'X-CSRFToken': '{{ csrf_token }}'
                 },
                 credentials: 'same-origin',
                 body: JSON.stringify(data)
             })
             .then(function(response) {
-
+                return response.json()
+            })
+            .then(function(session) {
+                return stripe.redirectToCheckout({ sessionId: session.session.id })
+            })
+            .then(function(result) {
+                if (result.error) {
+                    alert(result.error.message)
+                }
+            })
+            .catch(function(error) {
+                console.log('Errors', error)
             })
         }
-
-        console.log(errors)
 
         return false
     }
