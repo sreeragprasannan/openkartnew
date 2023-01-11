@@ -17,7 +17,7 @@ def start_order(request):
         product = item['product']
         total_price += product.price * int(item['quantity'])
         
-        obj = {
+        items.append({
             'price_data':{
                 'currency': 'inr',
                 'product_data': {
@@ -26,9 +26,7 @@ def start_order(request):
                 'unit_amount': product.price,
             },
             'quantity': item['quantity'],
-        }
-        
-        items.append(obj)
+        })
         
     session = ''
     payment_intent = ''
@@ -43,15 +41,19 @@ def start_order(request):
     )
     payment_intent = session.payment_intent
     
-    first_name = data['first_name']
-    last_name = data['last_name']
-    email = data['email']
-    address = data['address']
-    zipcode = data['zipcode']
-    place = data['place']
-    phone = data['phone']
-
-    order = Order.objects.create(user=request.user, first_name=first_name, last_name=last_name, email=email, phone=phone, address=address, zipcode=zipcode, place=place)
+    order = Order.objects.create(
+        user=request.user,
+        first_name=data['first_name'],
+        last_name=data['last_name'],
+        email=data['email'],
+        phone=data['phone'],
+        address=data['address'],
+        zipcode=data['zipcode'],
+        place= data['place'],
+        payment_intent=payment_intent,
+        pais=True,
+        paid_amount=total_price
+        )
     order.payment_intent = payment_intent
     order.paid_amount = total_price
     order.paid = True
@@ -65,6 +67,6 @@ def start_order(request):
 
         item = OrderItem.objects.create(order=order, product=product, price=price, quantity=quantity)
 
-
+    cart.clear()
 
     return JsonResponse({'session': session, 'order': payment_intent})
