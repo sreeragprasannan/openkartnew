@@ -9,6 +9,7 @@ class Category(models.Model):
     slug = models.SlugField()
 
     class Meta:
+        verbose_name_plural = 'Catagories'
         ordering = ('name',)
     
     def __str__(self):
