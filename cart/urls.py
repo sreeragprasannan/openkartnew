@@ -12,3 +12,4 @@ urlpatterns = [
     path('hx_cart_total/', hx_cart_total, name='hx_cart_total'),
     
 ]
+
